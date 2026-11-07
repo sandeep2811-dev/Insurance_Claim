@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-background text-slate-800 font-sans antialiased selection:bg-accent-blue selection:text-white relative overflow-x-hidden;
+  }
+
+  /* Mesh Gradient Background base */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image:
+      radial-gradient(at 40% 20%, hsla(228, 100%, 74%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 0.1) 0px, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface/80 rounded-3xl shadow-soft border border-white/60 backdrop-blur-xl relative overflow-hidden;
+  }
+
+  .glass-panel {
+    @apply bg-white/40 backdrop-blur-2xl border border-white/60 shadow-glass rounded-3xl relative overflow-hidden;
+  }
+
+  .glass-panel::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/40 to-white/0 pointer-events-none;
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg,
+        rgba(241, 245, 249, 0.4) 0%,
+        rgba(241, 245, 249, 0.8) 50%,
+        rgba(241, 245, 249, 0.4) 100%);
+    background-size: 200% 100%;
+    @apply animate-shimmer;
+  }
+
+  /* Cleaner badge styles */
+  .badge-approve {
+    @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100;
+  }
+
+  .badge-review {
+    @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-semibold bg-amber-50 text-amber-700 border border-amber-100;
+  }
+}
+
+/* --- Print Styles for PDF Generation --- */
+@media print {
+
+  /* Hide non-essential UI elements */
+  nav,
+  button.print\:hidden,
+  .fixed {
+    display: none !important;
+  }
+
+  /* Reset body styling for clean printing */
+  body {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  body::before {
+    display: none !important;
+    /* Hide background gradient blobs */
+  }
+
+  /* Ensure main content is visible and takes up full width */
+  main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    border-top: none !important;
+  }
+
+  /* Remove shadow and backdrop-blur from glass panels for better printing */
+  .glass-panel {
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    border: 1px solid #cbd5e1 !important;
+    /* solid slate-300 */
+    background: white !important;
+  }
+
+  /* Ensure backgrounds print (requires 'print background colors' in browser setting, but this helps) */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Prevent page breaks inside cards/rows */
+  .glass-panel,
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Force all dark-themed Tailwind component backgrounds and text to print at light colors */
+  .bg-gray-900\/80,
+  .bg-gray-900\/60,
+  .bg-gray-900\/40,
+  .bg-gray-900\/30,
+  .bg-gray-800\/80,
+  .bg-gray-800\/60,
+  .bg-gray-800\/40 {
+    background-color: white !important;
+  }
+
+  /* Force table rows to have white background and dark borders */
+  tr,
+  td,
+  th {
+    background-color: white !important;
+    color: #1e293b !important;
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Force white and gray text colors to become dark for print */
+  .text-white,
+  .text-gray-100,
+  .text-gray-200,
+  .text-gray-300,
+  .text-gray-400 {
+    color: #1e293b !important;
+  }
+
+  /* Make the totals box visible with visible border and text */
+  .bg-gray-900\/80 {
+    background-color: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+  }
+}
