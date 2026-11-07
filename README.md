@@ -161,6 +161,14 @@ npm run dev
 
 ---
 
+## 📄 Project Documentation
+
+* [Project Report (PDF)](docs/InsureClaim_Vision_Project_Report.pdf)
+* [Project Report (Word)](docs/InsureClaim_Vision_Project_Report.docx)
+* [Presentation (PowerPoint)](docs/InsureClaim_Vision_Presentation.pptx)
+
+---
+
 ## 👨‍💻 Author
 
 **Sandeep Pullareddy**
